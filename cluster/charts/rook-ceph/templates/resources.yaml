@@ -14,17 +14,22 @@ spec:
   version: v1
   validation:
         openAPIV3Schema:
+          type: object
           properties:
             spec:
+              type: object
               properties:
-                annotations: {}
+                annotations:
+                  type: object
                 cephVersion:
+                  type: object
                   properties:
                     allowUnsupported:
                       type: boolean
                     image:
                       type: string
                 dashboard:
+                  type: object
                   properties:
                     enabled:
                       type: boolean
@@ -40,6 +45,7 @@ spec:
                   pattern: ^/(\S+)
                   type: string
                 disruptionManagement:
+                  type: object
                   properties:
                     machineDisruptionBudgetNamespace:
                       type: string
@@ -54,6 +60,7 @@ spec:
                 continueUpgradeAfterChecksEvenIfNotHealthy:
                   type: boolean
                 mon:
+                  type: object
                   properties:
                     allowMultiplePerNode:
                       type: boolean
@@ -61,26 +68,34 @@ spec:
                       maximum: 9
                       minimum: 0
                       type: integer
-                    volumeClaimTemplate: {}
+                    volumeClaimTemplate:
+                      type: object
                 mgr:
+                  type: object
                   properties:
                     modules:
+                      type: array
                       items:
+                        type: object
                         properties:
                           name:
                             type: string
                           enabled:
                             type: boolean
                 network:
+                  type: object
                   properties:
                     hostNetwork:
                       type: boolean
                     provider:
                       type: string
-                    selectors: {}
+                    selectors:
+                      type: object
                 storage:
+                  type: object
                   properties:
                     disruptionManagement:
+                      type: object
                       properties:
                         machineDisruptionBudgetNamespace:
                           type: string
@@ -93,11 +108,14 @@ spec:
                     useAllNodes:
                       type: boolean
                     nodes:
+                      type: array
                       items:
+                        type: object
                         properties:
                           name:
                             type: string
                           config:
+                            type: object
                             properties:
                               metadataDevice:
                                 type: string
@@ -124,11 +142,14 @@ spec:
                           devices:
                             type: array
                             items:
+                              type: object
                               properties:
                                 name:
                                   type: string
-                                config: {}
-                          resources: {}
+                                config:
+                                  type: object
+                          resources:
+                            type: object
                       type: array
                     useAllDevices:
                       type: boolean
@@ -136,21 +157,27 @@ spec:
                       type: string
                     devicePathFilter:
                       type: string
-                    config: {}
-                    storageClassDeviceSets: {}
+                    config:
+                      type: object
+                    storageClassDeviceSets:
+                      type: object
                 driveGroups:
                   type: array
                   nullable: true
                   items:
+                    type: object
                     properties:
                       name:
                         type: string
-                      spec: {}
-                      placement: {}
+                      spec:
+                        type: object
+                      placement:
+                        type: object
                     required:
                     - name
                     - spec
                 monitoring:
+                  type: object
                   properties:
                     enabled:
                       type: boolean
@@ -159,17 +186,22 @@ spec:
                 removeOSDsIfOutAndSafeToRemove:
                   type: boolean
                 external:
+                  type: object
                   properties:
                     enable:
                       type: boolean
-                placement: {}
-                resources: {}
+                placement:
+                   type: object
+                resources:
+                  type: object
                 cleanupPolicy:
+                  type: object
                   properties:
                     confirmation:
                       type: string
                       pattern: ^$|^yes-really-destroy-data$
                     sanitizeDisks:
+                      type: object
                       properties:
                         method:
                           type: string
