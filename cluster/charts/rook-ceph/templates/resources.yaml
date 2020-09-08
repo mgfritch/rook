@@ -13,73 +13,32 @@ spec:
   scope: Namespaced
   version: v1
   validation:
-    openAPIV3Schema:
-      properties:
-        spec:
+        openAPIV3Schema:
           properties:
-            annotations: {}
-            cephVersion:
+            spec:
               properties:
-                allowUnsupported:
-                  type: boolean
-                image:
+                annotations: {}
+                cephVersion:
+                  properties:
+                    allowUnsupported:
+                      type: boolean
+                    image:
+                      type: string
+                dashboard:
+                  properties:
+                    enabled:
+                      type: boolean
+                    urlPrefix:
+                      type: string
+                    port:
+                      type: integer
+                      minimum: 0
+                      maximum: 65535
+                    ssl:
+                      type: boolean
+                dataDirHostPath:
+                  pattern: ^/(\S+)
                   type: string
-            dashboard:
-              properties:
-                enabled:
-                  type: boolean
-                urlPrefix:
-                  type: string
-                port:
-                  type: integer
-                  minimum: 0
-                  maximum: 65535
-                ssl:
-                  type: boolean
-            dataDirHostPath:
-              pattern: ^/(\S+)
-              type: string
-            disruptionManagement:
-              properties:
-                machineDisruptionBudgetNamespace:
-                  type: string
-                managePodBudgets:
-                  type: boolean
-                osdMaintenanceTimeout:
-                  type: integer
-                manageMachineDisruptionBudgets:
-                  type: boolean
-            skipUpgradeChecks:
-              type: boolean
-            continueUpgradeAfterChecksEvenIfNotHealthy:
-              type: boolean
-            mon:
-              properties:
-                allowMultiplePerNode:
-                  type: boolean
-                count:
-                  maximum: 9
-                  minimum: 0
-                  type: integer
-                volumeClaimTemplate: {}
-            mgr:
-              properties:
-                modules:
-                  items:
-                    properties:
-                      name:
-                        type: string
-                      enabled:
-                        type: boolean
-            network:
-              properties:
-                hostNetwork:
-                  type: boolean
-                provider:
-                  type: string
-                selectors: {}
-            storage:
-              properties:
                 disruptionManagement:
                   properties:
                     machineDisruptionBudgetNamespace:
@@ -90,96 +49,137 @@ spec:
                       type: integer
                     manageMachineDisruptionBudgets:
                       type: boolean
-                useAllNodes:
+                skipUpgradeChecks:
                   type: boolean
-                nodes:
+                continueUpgradeAfterChecksEvenIfNotHealthy:
+                  type: boolean
+                mon:
+                  properties:
+                    allowMultiplePerNode:
+                      type: boolean
+                    count:
+                      maximum: 9
+                      minimum: 0
+                      type: integer
+                    volumeClaimTemplate: {}
+                mgr:
+                  properties:
+                    modules:
+                      items:
+                        properties:
+                          name:
+                            type: string
+                          enabled:
+                            type: boolean
+                network:
+                  properties:
+                    hostNetwork:
+                      type: boolean
+                    provider:
+                      type: string
+                    selectors: {}
+                storage:
+                  properties:
+                    disruptionManagement:
+                      properties:
+                        machineDisruptionBudgetNamespace:
+                          type: string
+                        managePodBudgets:
+                          type: boolean
+                        osdMaintenanceTimeout:
+                          type: integer
+                        manageMachineDisruptionBudgets:
+                          type: boolean
+                    useAllNodes:
+                      type: boolean
+                    nodes:
+                      items:
+                        properties:
+                          name:
+                            type: string
+                          config:
+                            properties:
+                              metadataDevice:
+                                type: string
+                              storeType:
+                                type: string
+                                pattern: ^(bluestore)$
+                              databaseSizeMB:
+                                type: string
+                              walSizeMB:
+                                type: string
+                              journalSizeMB:
+                                type: string
+                              osdsPerDevice:
+                                type: string
+                              encryptedDevice:
+                                type: string
+                                pattern: ^(true|false)$
+                          useAllDevices:
+                            type: boolean
+                          deviceFilter:
+                            type: string
+                          devicePathFilter:
+                            type: string
+                          devices:
+                            type: array
+                            items:
+                              properties:
+                                name:
+                                  type: string
+                                config: {}
+                          resources: {}
+                      type: array
+                    useAllDevices:
+                      type: boolean
+                    deviceFilter:
+                      type: string
+                    devicePathFilter:
+                      type: string
+                    config: {}
+                    storageClassDeviceSets: {}
+                driveGroups:
+                  type: array
+                  nullable: true
                   items:
                     properties:
                       name:
                         type: string
-                      config:
-                        properties:
-                          metadataDevice:
-                            type: string
-                          storeType:
-                            type: string
-                            pattern: ^(bluestore)$
-                          databaseSizeMB:
-                            type: string
-                          walSizeMB:
-                            type: string
-                          journalSizeMB:
-                            type: string
-                          osdsPerDevice:
-                            type: string
-                          encryptedDevice:
-                            type: string
-                            pattern: ^(true|false)$
-                      useAllDevices:
-                        type: boolean
-                      deviceFilter:
-                        type: string
-                      devicePathFilter:
-                        type: string
-                      devices:
-                        type: array
-                        items:
-                          properties:
-                            name:
-                              type: string
-                            config: {}
-                      resources: {}
-                  type: array
-                useAllDevices:
-                  type: boolean
-                deviceFilter:
-                  type: string
-                devicePathFilter:
-                  type: string
-                config: {}
-                storageClassDeviceSets: {}
-            driveGroups:
-              type: array
-              nullable: true
-              items:
-                properties:
-                  name:
-                    type: string
-                  spec: {}
-                  placement: {}
-                required:
-                - name
-                - spec
-            monitoring:
-              properties:
-                enabled:
-                  type: boolean
-                rulesNamespace:
-                  type: string
-            removeOSDsIfOutAndSafeToRemove:
-              type: boolean
-            external:
-              properties:
-                enable:
-                  type: boolean
-            placement: {}
-            resources: {}
-            cleanupPolicy:
-              properties:
-                confirmation:
-                  type: string
-                  pattern: ^$|^yes-really-destroy-data$
-                sanitizeDisks:
+                      spec: {}
+                      placement: {}
+                    required:
+                    - name
+                    - spec
+                monitoring:
                   properties:
-                    method:
+                    enabled:
+                      type: boolean
+                    rulesNamespace:
                       type: string
-                      pattern: ^(complete|quick)$
-                    dataSource:
+                removeOSDsIfOutAndSafeToRemove:
+                  type: boolean
+                external:
+                  properties:
+                    enable:
+                      type: boolean
+                placement: {}
+                resources: {}
+                cleanupPolicy:
+                  properties:
+                    confirmation:
                       type: string
-                      pattern: ^(zero|random)$
-                    iteration:
-                      type: integer
-                      format: int32
+                      pattern: ^$|^yes-really-destroy-data$
+                    sanitizeDisks:
+                      properties:
+                        method:
+                          type: string
+                          pattern: ^(complete|quick)$
+                        dataSource:
+                          type: string
+                          pattern: ^(zero|random)$
+                        iteration:
+                          type: integer
+                          format: int32
   additionalPrinterColumns:
     - name: DataDirHostPath
       type: string
